@@ -11,11 +11,12 @@ const NotFoundPage = () => {
         <Spline 
           scene="/assets/404.spline" 
           style={{ height: "100vh" }}
-          onError={(error) => {
+          onError={(error: any) => {
             // Suppress Spline runtime error about .spline vs .splinecode files
             // This is a known issue with Spline library
-            if (error.message?.includes("splinecode")) {
-              console.warn("Spline file format warning (expected):", error.message);
+            const errorMessage = error?.message || error?.toString() || "";
+            if (errorMessage.includes("splinecode")) {
+              console.warn("Spline file format warning (expected):", errorMessage);
               return;
             }
             console.error("Spline loading error:", error);
