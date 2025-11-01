@@ -14,6 +14,7 @@ interface BlurIntProps {
     visible: { filter: string; opacity: number };
   };
   duration?: number;
+  as?: keyof JSX.IntrinsicElements;
 }
 export const BlurIn = ({
   children,
@@ -21,6 +22,7 @@ export const BlurIn = ({
   variant,
   delay = 0,
   duration = 1,
+  as: Component = "div",
 }: BlurIntProps) => {
   const defaultVariants = {
     hidden: { filter: "blur(10px)", opacity: 0 },
@@ -28,8 +30,10 @@ export const BlurIn = ({
   };
   const combinedVariants = variant || defaultVariants;
 
+  // Always use motion.div as wrapper to avoid nested HTML heading tags
+  // The 'as' prop is kept for backward compatibility but wrapper is always div
   return (
-    <motion.h1
+    <motion.div
       initial="hidden"
       animate="visible"
       transition={{ duration, delay }}
@@ -40,7 +44,7 @@ export const BlurIn = ({
       )}
     >
       {children}
-    </motion.h1>
+    </motion.div>
   );
 };
 

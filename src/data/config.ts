@@ -30,6 +30,9 @@ const config = {
   },
   social: {
     github: "https://github.com/huzaifahmedz",
+    linkedin: "https://www.linkedin.com/in/huzaifahmedz",
+    twitter: "https://twitter.com/huzaifahmedz",
+    instagram: "https://instagram.com/huzaifahmedz",
   },
 };
 export { config };

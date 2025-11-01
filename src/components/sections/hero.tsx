@@ -42,7 +42,7 @@ const HeroSection = () => {
                     <br className="md:hidden" />
                   </p>
                 </BlurIn>
-                <BlurIn delay={1}>
+                <BlurIn delay={1} as="div">
                   <Tooltip delayDuration={300}>
                     <TooltipTrigger asChild>
                       <h1

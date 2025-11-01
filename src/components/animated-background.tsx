@@ -569,6 +569,15 @@ const AnimatedBackground = () => {
             bypassLoading();
           }}
           scene="/assets/skills-keyboard.spline"
+          onError={(error) => {
+            // Suppress Spline runtime error about .spline vs .splinecode files
+            // This is a known issue with Spline library
+            if (error.message?.includes("splinecode")) {
+              console.warn("Spline file format warning (expected):", error.message);
+              return;
+            }
+            console.error("Spline loading error:", error);
+          }}
         />
       </Suspense>
     </>

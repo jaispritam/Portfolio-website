@@ -53,9 +53,18 @@ const SocketContextProvider = ({ children }: { children: ReactNode }) => {
 
   // SETUP SOCKET.IO
   useEffect(() => {
+    // Only connect if WS URL is configured
+    if (!process.env.NEXT_PUBLIC_WS_URL) {
+      console.warn("NEXT_PUBLIC_WS_URL is not configured. Socket.io connection skipped.");
+      return;
+    }
+
     const username =  localStorage.getItem("username") || generateRandomCursor().name
-    const socket = io(process.env.NEXT_PUBLIC_WS_URL!, {
+    const socket = io(process.env.NEXT_PUBLIC_WS_URL, {
       query: { username },
+      reconnection: true,
+      reconnectionDelay: 1000,
+      reconnectionAttempts: 5,
     });
     setSocket(socket);
     socket.on("connect", () => {});
@@ -64,6 +73,9 @@ const SocketContextProvider = ({ children }: { children: ReactNode }) => {
     });
     socket.on("msg-receive", (msgs) => {
       setMsgs((p) => [...p, msgs]);
+    });
+    socket.on("connect_error", (error) => {
+      console.warn("Socket.io connection error:", error.message);
     });
     return () => {
       socket.disconnect();

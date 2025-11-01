@@ -58,6 +58,12 @@ export default function Body({
       {links.map((link, index) => {
         const { title, href, target } = link;
 
+        // Skip links without valid href
+        if (!href) {
+          console.warn(`Link "${title}" is missing href prop`);
+          return null;
+        }
+
         return (
           <Link
             key={`l_${index}`}
